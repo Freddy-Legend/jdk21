@@ -12,6 +12,7 @@ import java.util.*;
  * 版本历史 / Version History:
  * - JDK 9: List/Set/Map 工厂方法（不可变集合）/ Collection factory methods (immutable)
  */
+@SuppressWarnings("unused")
 public class CollectionFactoriesComparison {
 
     public static void main(String[] args) {
@@ -27,7 +28,7 @@ public class CollectionFactoriesComparison {
 
         System.out.println("JDK 8 List mutable? " + isMutable(oldList));
         System.out.println("JDK 8 Set mutable?  " + isMutable(oldSet));
-        System.out.println("JDK 8 Map mutable?  " + isMutable(oldMap));
+        System.out.println("JDK 8 Map mutable?  " + isMutableMap(oldMap));
 
         // JDK 9：不可变集合工厂方法
         // JDK 9: Immutable collection factories
@@ -42,15 +43,24 @@ public class CollectionFactoriesComparison {
 
         System.out.println("JDK 9 List mutable? " + isMutable(newList));
         System.out.println("JDK 9 Set mutable?  " + isMutable(newSet));
-        System.out.println("JDK 9 Map mutable?  " + isMutable(newMap));
-        System.out.println("JDK 9 Map2 mutable? " + isMutable(newMap2));
+        System.out.println("JDK 9 Map mutable?  " + isImmutableMap(newMap));
+        System.out.println("JDK 9 Map2 mutable? " + isImmutableMap(newMap2));
     }
 
     private static boolean isMutable(Collection<?> c) {
         try { c.add(null); return true; } catch (UnsupportedOperationException e) { return false; }
     }
 
-    private static boolean isMutable(Map<?, ?> m) {
-        try { ((Map) m).put(new Object(), new Object()); return true; } catch (UnsupportedOperationException e) { return false; }
+    private static boolean isMutableMap(Map<String, Integer> m) {
+        try { 
+            m.put("testKey", 1); 
+            return true; // 如果能成功添加，则是可变的
+        } catch (UnsupportedOperationException e) { 
+            return false; // 如果抛出异常，则是不可变的
+        }
+    }
+
+    private static boolean isImmutableMap(Map<String, Integer> m) {
+        return !isMutableMap(m);
     }
 }
