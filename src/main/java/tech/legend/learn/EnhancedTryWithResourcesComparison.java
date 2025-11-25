@@ -52,14 +52,26 @@ public class EnhancedTryWithResourcesComparison {
 
         // JDK 7-8 方式 - 需要在 try-with-resources 中重新声明变量
         // JDK 7-8 way - need to re-declare variables in try-with-resources
+        /*
+        try (FileInputStream in = new FileInputStream("input.txt");
+             FileOutputStream out = new FileOutputStream("output.txt")) {
+            // 使用资源
+            // Use resources
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
+
+        // 或者使用传统的 try-finally（需要手动关闭资源）
+        // Or using traditional try-finally (need to manually close resources)
         FileInputStream in1 = null;
         FileOutputStream out1 = null;
         try {
-            in1 = new FileInputStream("input.txt");
-            out1 = new FileOutputStream("output.txt");
+            // in1 = new FileInputStream("input.txt");
+            // out1 = new FileOutputStream("output.txt");
             // 模拟复制操作
             // Simulate copy operation
-            System.out.println("JDK 7-8 Style: Resources declared inside try-with-resources");
+            System.out.println("JDK 7-8 Style: Resources would be declared inside try-with-resources or manually managed");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -72,18 +84,6 @@ public class EnhancedTryWithResourcesComparison {
                 e.printStackTrace();
             }
         }
-
-        // 或者使用标准的 try-with-resources（需要重新声明变量）
-        // Or using standard try-with-resources (need to re-declare variables)
-        /*
-        try (FileInputStream in = new FileInputStream("input.txt");
-             FileOutputStream out = new FileOutputStream("output.txt")) {
-            // 使用资源
-            // Use resources
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
 
         // ============================================
         // JDK 9: 增强的 try-with-resources
@@ -132,5 +132,6 @@ public class EnhancedTryWithResourcesComparison {
 
         System.out.println("Enhanced Try-With-Resources 示例已展示");
         System.out.println("注意：为避免文件依赖，实际文件操作代码已被注释");
+        System.out.println("Note: Actual file operation code is commented out to avoid file dependencies");
     }
 }
