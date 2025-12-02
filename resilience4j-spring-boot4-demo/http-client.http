@@ -1,0 +1,154 @@
+### Resilience4j Spring Boot Demo - HTTP Client Tests
+
+@host = localhost:9080
+
+### JsonView Controller Tests
+
+### Get user without password
+GET http://{{host}}/jsonview/user
+
+### Get user with password
+GET http://{{host}}/jsonview/userAndPassWord
+
+### Get user with no view (default)
+GET http://{{host}}/jsonview/none
+
+###
+
+### Backend A Controller Tests (With Annotations)
+
+### Success response
+GET http://{{host}}/backendA/success
+
+### Failure response (triggers circuit breaker)
+GET http://{{host}}/backendA/failure
+
+### Success with exception
+GET http://{{host}}/backendA/successException
+
+### Ignore exception
+GET http://{{host}}/backendA/ignore
+
+### Mono success
+GET http://{{host}}/backendA/monoSuccess
+
+### Mono failure
+GET http://{{host}}/backendA/monoFailure
+
+### Flux success
+GET http://{{host}}/backendA/fluxSuccess
+
+### Flux failure
+GET http://{{host}}/backendA/fluxFailure
+
+### Mono timeout
+GET http://{{host}}/backendA/monoTimeout
+
+### Flux timeout
+GET http://{{host}}/backendA/fluxTimeout
+
+### Future success
+GET http://{{host}}/backendA/futureSuccess
+
+### Future failure
+GET http://{{host}}/backendA/futureFailure
+
+### Future timeout
+GET http://{{host}}/backendA/futureTimeout
+
+### Failure with fallback
+GET http://{{host}}/backendA/fallback
+
+###
+
+### Backend B Controller Tests (With Programmatic Configuration)
+
+### Success response
+GET http://{{host}}/backendB/success
+
+### Failure response (triggers resilience4j decorators)
+GET http://{{host}}/backendB/failure
+
+### Success with exception
+GET http://{{host}}/backendB/successException
+
+### Ignore exception
+GET http://{{host}}/backendB/ignore
+
+### Mono success
+GET http://{{host}}/backendB/monoSuccess
+
+### Mono failure
+GET http://{{host}}/backendB/monoFailure
+
+### Flux success
+GET http://{{host}}/backendB/fluxSuccess
+
+### Flux failure
+GET http://{{host}}/backendB/fluxFailure
+
+### Mono timeout with fallback
+GET http://{{host}}/backendB/monoTimeout
+
+### Flux timeout with fallback
+GET http://{{host}}/backendB/fluxTimeout
+
+### Future success
+GET http://{{host}}/backendB/futureSuccess
+
+### Future failure
+GET http://{{host}}/backendB/futureFailure
+
+### Future timeout with fallback
+GET http://{{host}}/backendB/futureTimeout
+
+### Failure with fallback
+GET http://{{host}}/backendB/fallback
+
+###
+
+### Backend C Controller Tests
+
+### Success response
+GET http://{{host}}/backendC/success
+
+### Failure response
+GET http://{{host}}/backendC/failure
+
+### Success with exception
+GET http://{{host}}/backendC/successException
+
+### Ignore exception
+GET http://{{host}}/backendC/ignore
+
+### Mono success
+GET http://{{host}}/backendC/monoSuccess
+
+### Mono failure
+GET http://{{host}}/backendC/monoFailure
+
+### Flux success
+GET http://{{host}}/backendC/fluxSuccess
+
+### Flux failure
+GET http://{{host}}/backendC/fluxFailure
+
+### Mono timeout
+GET http://{{host}}/backendC/monoTimeout
+
+### Flux timeout
+GET http://{{host}}/backendC/fluxTimeout
+
+### Future success
+GET http://{{host}}/backendC/futureSuccess
+
+### Future failure
+GET http://{{host}}/backendC/futureFailure
+
+### Future timeout
+GET http://{{host}}/backendC/futureTimeout
+
+### Failure with fallback
+GET http://{{host}}/backendC/fallback
+
+###
