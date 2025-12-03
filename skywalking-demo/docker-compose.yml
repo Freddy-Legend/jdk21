@@ -1,0 +1,61 @@
+version: '3.8'
+services:
+  # 1. 存储后端: Elasticsearch
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.9
+    container_name: elasticsearch
+    restart: always
+    ports:
+      - 9200:9200
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # 限制 ES 内存使用
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  # 2. SkyWalking OAP Server (后端处理核心)
+  oap:
+    image: apache/skywalking-oap-server:9.5.0
+    container_name: oap
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    links:
+      - elasticsearch
+    restart: always
+    ports:
+      - 11800:11800 # gRPC 端口，Agent 用于上传数据
+      - 12800:12800 # HTTP 端口，用于 UI查询
+    healthcheck:
+      test: ["CMD-SHELL", "/skywalking/bin/swctl ch"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    environment:
+      SW_STORAGE: elasticsearch
+      SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
+      TZ: Asia/Shanghai
+
+  # 3. SkyWalking Web UI (前端界面)
+  ui:
+    image: apache/skywalking-ui:9.5.0
+    container_name: ui
+    depends_on:
+      oap:
+        condition: service_healthy
+    links:
+      - oap
+    restart: always
+    ports:
+      - 8080:8080 # 访问 UI 的端口
+    environment:
+      SW_OAP_ADDRESS: http://oap:12800
+      TZ: Asia/Shanghai

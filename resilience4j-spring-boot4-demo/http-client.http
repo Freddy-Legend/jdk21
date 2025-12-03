@@ -7,11 +7,37 @@
 ### Get user without password
 GET http://{{host}}/jsonview/user
 
+> {%
+    client.test("jsonview/user", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.username != undefined, "username is null");
+        client.assert(response.body.password == undefined, "password need null");
+    });
+%}
+
 ### Get user with password
 GET http://{{host}}/jsonview/userAndPassWord
 
+> {%
+    client.test("jsonview/userAndPassWord", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.username != undefined, "username is null");
+        client.assert(response.body.password != undefined, "password is null");
+        client.assert(response.body.email == undefined, "email need null");
+    });
+%}
+
 ### Get user with no view (default)
 GET http://{{host}}/jsonview/none
+
+> {%
+    client.test("jsonview/none", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.username != undefined, "username is null");
+        client.assert(response.body.password != undefined, "password is null");
+        client.assert(response.body.email != undefined, "email is null");
+    });
+%}
 
 ###
 
