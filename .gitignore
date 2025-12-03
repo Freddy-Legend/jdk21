@@ -44,3 +44,4 @@ build/
 **/*.class
 **/.gradle/
 **/gradle/
+/skywalking-demo-spring-boot/.mvn/wrapper/maven-wrapper.properties
